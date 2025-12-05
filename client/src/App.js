@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import Footer from './components/Footer.jsx';
 import AddTask from './components/AddTask.jsx';
 import Calendar from './components/Calender.jsx';
+import Profile from './components/Profile.jsx';
+
 
 function App() {
   // Fix: Add ?. before email to handle when user is null
@@ -29,6 +31,8 @@ function App() {
             <Route path="/add-task" element={<AddTask />} />
             <Route path="/add-task/:id" element={<AddTask />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/profile" element={<Profile />} />
+
 
           </Routes>
         </Row>

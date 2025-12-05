@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "/api/tasks"; 
+const API_URL = "http://localhost:5000/tasks"; 
 
 export const addTask = createAsyncThunk("tasks/addTask", async (taskData, { rejectWithValue }) => {
   try {
@@ -61,9 +61,9 @@ export const TaskSlice = createSlice({
       .addCase(addTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        
-        const newTask = action.payload.task || action.payload; 
-        state.tasks.push(newTask); 
+
+        const newTask = action.payload.task || action.payload;
+        state.tasks.push(newTask);
       })
       .addCase(addTask.rejected, (state, action) => {
         state.isLoading = false;
@@ -71,21 +71,24 @@ export const TaskSlice = createSlice({
         state.message = action.payload;
       })
 
- 
+
       .addCase(getTasks.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getTasks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.tasks = Array.isArray(action.payload) ? action.payload : action.payload.tasks; 
+
+        state.tasks = Array.isArray(action.payload)
+          ? action.payload
+          : action.payload.tasks;
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
       })
 
-      // Update Task
+
       .addCase(updateTask.fulfilled, (state, action) => {
         state.isSuccess = true;
         const updatedTask = action.payload.task || action.payload;
@@ -93,7 +96,7 @@ export const TaskSlice = createSlice({
         if (idx !== -1) state.tasks[idx] = updatedTask;
       })
 
-      // Delete Task
+
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.tasks = state.tasks.filter((t) => t._id !== action.payload);
@@ -102,6 +105,3 @@ export const TaskSlice = createSlice({
 });
 
 export default TaskSlice.reducer;
-
-
-

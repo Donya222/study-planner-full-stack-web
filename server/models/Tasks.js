@@ -6,6 +6,7 @@ const TaskSchema = mongoose.Schema({
   subject: { type: String, required: true }, 
   type: { type: String, default: "" }, 
   dueDateTime: { type: Date, required: true }, 
+  email: { type: String, required: true },
 }, {
   timestamps: { createdAt: true, updatedAt: true }
 });
