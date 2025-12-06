@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// =================== DB CONNECTION ===================
+// DB CONNECTION
 try {
     const conStr = "mongodb+srv://donya:1234@cluster0.onlzt7y.mongodb.net/trytosee?retryWrites=true&w=majority&appName=Cluster0";
     mongoose.connect(conStr);
@@ -18,13 +18,13 @@ try {
     console.log("Database connection error: " + error);
 }
 
-// =================== START SERVER ===================
+// START SERVER
 app.listen(5000, () => {
     console.log("Server running on port 5000..");
 });
 
 
-// =================== LOGIN ===================
+// LOGIN
 app.post("/login", async (req, res) => {
     try {
         const user = await UserModel.findOne({ email: req.body.email });
@@ -45,13 +45,13 @@ app.post("/login", async (req, res) => {
 });
 
 
-// =================== REGISTER ===================
+// REGISTER
 app.post("/register", async (req, res) => {
     try {
         const { uname, email, password, profilepic } = req.body;
 
         const hash_password = await bcrypt.hash(password, 10);
-        const user = await UserModel.findOne({ email: email });
+        const user = await UserModel.findOne({ email });
 
         if (user)
             return res.status(500).json({ message: "User already exists..." });
@@ -72,11 +72,9 @@ app.post("/register", async (req, res) => {
 });
 
 
-// =======================================
-//        PROFILE ROUTES (NEW)
-// =======================================
+// PROFILE ROUTES
 
-// Get user profile
+// GET PROFILE
 app.get("/profile/:id", async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id).select("-password");
@@ -91,11 +89,10 @@ app.get("/profile/:id", async (req, res) => {
     }
 });
 
-
-// Update profile
+// UPDATE PROFILE
 app.put("/profile/:id", async (req, res) => {
     try {
-        const { uname, email, profilepic, location } = req.body;
+        const { uname, email, profilepic, location, lat, lng } = req.body;
 
         const updateData = {};
 
@@ -103,6 +100,8 @@ app.put("/profile/:id", async (req, res) => {
         if (email) updateData.email = email;
         if (profilepic) updateData.profilepic = profilepic;
         if (location) updateData.location = location;
+        if (lat !== undefined) updateData.lat = lat;
+        if (lng !== undefined) updateData.lng = lng;
 
         const updatedUser = await UserModel.findByIdAndUpdate(
             req.params.id,
@@ -124,23 +123,17 @@ app.put("/profile/:id", async (req, res) => {
 });
 
 
-// Delete account + all tasks
+// DELETE ACCOUNT
 app.delete("/profile/:id", async (req, res) => {
     try {
-        // Find user
         const user = await UserModel.findById(req.params.id);
         if (!user)
             return res.status(404).json({ message: "User not found" });
 
-        // Delete tasks related to this user
         await TaskModel.deleteMany({ email: user.email });
-
-        // Delete user
         await UserModel.findByIdAndDelete(req.params.id);
 
-        res.status(200).json({
-            message: "Account and tasks deleted"
-        });
+        res.status(200).json({ message: "Account and tasks deleted" });
 
     } catch (error) {
         res.status(500).json({ message: "Error deleting account" });
@@ -148,10 +141,10 @@ app.delete("/profile/:id", async (req, res) => {
 });
 
 
-// =================== ADD TASK ===================
+// ADD TASK  ⭐ WITH PRIORITY
 app.post("/tasks", async (req, res) => {
     try {
-        const { title, details, subject, type, dueDateTime, email } = req.body;
+        const { title, details, subject, type, dueDateTime, email, priority } = req.body;
 
         const newTask = new TaskModel({
             title,
@@ -159,7 +152,10 @@ app.post("/tasks", async (req, res) => {
             subject,
             type,
             dueDateTime,
-            email
+            email,
+            priority: priority || "Medium", // ⭐ NEW
+            done: false,
+            completedAt: null
         });
 
         await newTask.save();
@@ -170,13 +166,12 @@ app.post("/tasks", async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error adding task:", error);
         res.status(500).json({ message: "Error adding task" });
     }
 });
 
 
-// =================== VIEW TASKS ===================
+// VIEW TASKS
 app.get("/tasks", async (req, res) => {
     try {
         const { email } = req.query;
@@ -184,8 +179,7 @@ app.get("/tasks", async (req, res) => {
             return res.status(400).json({ message: "Email is required" });
 
         const tasks = await TaskModel.find({ email }).sort({ dueDateTime: 1 });
-
-        res.status(200).json({ tasks });
+        res.status(200).json(tasks);
 
     } catch (error) {
         res.status(500).json({ message: "Error fetching tasks" });
@@ -193,7 +187,7 @@ app.get("/tasks", async (req, res) => {
 });
 
 
-// =================== GET SINGLE TASK ===================
+// GET SINGLE TASK
 app.get("/tasks/:id", async (req, res) => {
     try {
         const task = await TaskModel.findById(req.params.id);
@@ -204,17 +198,17 @@ app.get("/tasks/:id", async (req, res) => {
         res.status(200).json(task);
 
     } catch (error) {
-        res.status(500).json({ message: "Error fetching task details" });
+        res.status(500).json({ message: "Error fetching task" });
     }
 });
 
 
-// =================== UPDATE TASK ===================
+// UPDATE TASK ⭐ PRIORITY INCLUDED AUTOMATICALLY
 app.put("/tasks/:id", async (req, res) => {
     try {
         const updatedTask = await TaskModel.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            req.body, // contains priority, no need for manual mapping
             { new: true }
         );
 
@@ -232,14 +226,37 @@ app.put("/tasks/:id", async (req, res) => {
 });
 
 
-// =================== DELETE TASK ===================
+// UPDATE DONE
+app.put("/tasks/done/:id", async (req, res) => {
+    try {
+        const task = await TaskModel.findById(req.params.id);
+
+        if (!task)
+            return res.status(404).json({ message: "Task not found" });
+
+        task.done = !task.done;
+
+        task.completedAt = task.done ? new Date() : null;
+
+        await task.save();
+
+        res.status(200).json({
+            message: "Done status updated",
+            task
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Error updating done state" });
+    }
+});
+
+
+// DELETE TASK
 app.delete("/tasks/:id", async (req, res) => {
     try {
         await TaskModel.findByIdAndDelete(req.params.id);
 
-        res.status(200).json({
-            message: "Task deleted successfully"
-        });
+        res.status(200).json({ message: "Task deleted successfully" });
 
     } catch (error) {
         res.status(500).json({ message: "Error deleting task" });

@@ -1,25 +1,43 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { updateProfile } from "../features/UserSlice";
+
 
 const Profile = () => {
   const user = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
 
   const [editMode, setEditMode] = useState(false);
 
   const [formData, setFormData] = useState({
     uname: user?.uname,
     email: user?.email,
-    location: user?.location || "Oman"
+    location: user?.location || "Oman",
+    lat: user?.lat || null,
+    lng: user?.lng || null
   });
 
+  // Handle input fields
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Save to backend + redux
   const handleSave = () => {
-    // هنا تحطين تحديث قاعدة البيانات لو تبين
-    console.log("Saved:", formData);
+    dispatch(updateProfile({ id: user._id, data: formData }));
     setEditMode(false);
+  };
+
+  // Get live GPS location
+  const handleUseMyLocation = () => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setFormData({
+        ...formData,
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+        location: `Lat: ${pos.coords.latitude}, Lng: ${pos.coords.longitude}`
+      });
+    });
   };
 
   return (
@@ -30,9 +48,7 @@ const Profile = () => {
         padding: "30px"
       }}
     >
-      {/* =======================
-          VIEW PROFILE
-          ======================= */}
+      {/* ===================== VIEW MODE ===================== */}
       {!editMode && (
         <>
           <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
@@ -48,7 +64,6 @@ const Profile = () => {
             <h3 style={{ marginTop: "15px" }}>{user?.uname}</h3>
           </div>
 
-          {/* Edit Profile Button */}
           <div
             onClick={() => setEditMode(true)}
             style={{
@@ -66,7 +81,6 @@ const Profile = () => {
             <span>›</span>
           </div>
 
-          {/* Readonly Inputs */}
           <label>Name</label>
           <input value={user?.uname} disabled style={inputStyle} />
 
@@ -80,7 +94,7 @@ const Profile = () => {
             style={inputStyle}
           />
 
-          {/* Delete Account */}
+          {/* Delete */}
           <button
             style={{
               marginTop: "30px",
@@ -99,9 +113,7 @@ const Profile = () => {
         </>
       )}
 
-      {/* =======================
-          EDIT PROFILE MODE
-          ======================= */}
+      {/* ===================== EDIT MODE ===================== */}
       {editMode && (
         <>
           <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -133,7 +145,7 @@ const Profile = () => {
             style={inputStyle}
           />
 
-          <label>Location</label>
+          <label>Location Text</label>
           <input
             name="location"
             value={formData.location}
@@ -141,6 +153,49 @@ const Profile = () => {
             style={inputStyle}
           />
 
+          {/* 📍 BUTTON: USE MY LOCATION */}
+          <button
+            onClick={handleUseMyLocation}
+            style={{
+              padding: "10px",
+              backgroundColor: "#2b63d9",
+              width: "100%",
+              color: "white",
+              borderRadius: "8px",
+              border: "none",
+              marginBottom: "15px",
+              marginTop: "8px"
+            }}
+          >
+            Use My Current Location
+          </button>
+
+          {/* 🌍 GOOGLE MAPS VIEW */}
+          {formData.lat && formData.lng && (
+            <>
+              <label>Your Location on Map</label>
+              <div
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  marginBottom: "15px"
+                }}
+              >
+                <iframe
+                  title="map"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  src={`https://www.google.com/maps?q=${formData.lat},${formData.lng}&z=15&output=embed`}
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </>
+          )}
+
+          {/* SAVE / CANCEL */}
           <div
             style={{
               display: "flex",

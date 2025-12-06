@@ -15,7 +15,8 @@ const AddTask = () => {
     subject: "",
     type: "Task",
     dueDate: "",
-    dueTime: ""
+    dueTime: "",
+    priority: "Medium"   // ⭐ NEW
   });
 
   useEffect(() => {
@@ -39,7 +40,8 @@ const AddTask = () => {
             subject: task.subject,
             type: task.type,
             dueDate: dateStr,
-            dueTime: timeStr
+            dueTime: timeStr,
+            priority: task.priority || "Medium"  // ⭐ load existing priority
           });
         } catch (err) {
           console.error("Error fetching task", err);
@@ -126,6 +128,45 @@ const AddTask = () => {
                 <option value="Task">Task</option>
                 <option value="Exam">Exam</option>
               </Input>
+            </FormGroup>
+
+            {/* ⭐ NEW RADIO BUTTONS */}
+            <FormGroup>
+              <Label>Priority</Label>
+              <div style={{ display: "flex", gap: "20px", marginTop: "8px" }}>
+                <Label>
+                  <Input
+                    type="radio"
+                    name="priority"
+                    value="High"
+                    checked={formData.priority === "High"}
+                    onChange={handleChange}
+                  />
+                  High
+                </Label>
+
+                <Label>
+                  <Input
+                    type="radio"
+                    name="priority"
+                    value="Medium"
+                    checked={formData.priority === "Medium"}
+                    onChange={handleChange}
+                  />
+                  Medium
+                </Label>
+
+                <Label>
+                  <Input
+                    type="radio"
+                    name="priority"
+                    value="Low"
+                    checked={formData.priority === "Low"}
+                    onChange={handleChange}
+                  />
+                  Low
+                </Label>
+              </div>
             </FormGroup>
 
             <Row>

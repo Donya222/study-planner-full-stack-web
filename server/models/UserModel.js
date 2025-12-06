@@ -6,11 +6,15 @@ const UserSchema = mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 
-    // صورة البروفايل (اختياري)
+    // Profile Picture
     profilepic: { type: String, default: "" },
 
-    // الموقع – نستخدمه في صفحة البروفايل
-    location: { type: String, default: "Oman" }
+    // Country Name
+    location: { type: String, default: "Oman" },
+
+    // ⭐ NEW — Coordinates for Google Maps
+    lat: { type: Number, default: null },
+    lng: { type: Number, default: null }
   },
   {
     timestamps: true

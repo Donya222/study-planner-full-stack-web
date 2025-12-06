@@ -1,45 +1,86 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/tasks"; 
+const API_URL = "http://localhost:5000/tasks";
 
-export const addTask = createAsyncThunk("tasks/addTask", async (taskData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(API_URL, taskData);
-    return response.data;
-  } catch (error) {
-    console.error("Add Task Error:", error.response || error); 
-    return rejectWithValue(error.response?.data?.message || error.message);
+// ===========================
+// ADD TASK
+// ===========================
+export const addTask = createAsyncThunk(
+  "tasks/addTask",
+  async (taskData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(API_URL, taskData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
-});
+);
 
-export const getTasks = createAsyncThunk("tasks/getTasks", async (email, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`${API_URL}?email=${email}`);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
+// ===========================
+// GET TASKS BY EMAIL
+// ===========================
+export const getTasks = createAsyncThunk(
+  "tasks/getTasks",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}?email=${email}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
-});
+);
 
-export const updateTask = createAsyncThunk("tasks/updateTask", async ({ id, taskData }, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${API_URL}/${id}`, taskData);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
+// ===========================
+// UPDATE TASK FULL
+// ===========================
+export const updateTask = createAsyncThunk(
+  "tasks/updateTask",
+  async ({ id, taskData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}`, taskData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
-});
+);
 
-export const deleteTask = createAsyncThunk("tasks/deleteTask", async (id, { rejectWithValue }) => {
-  try {
-    await axios.delete(`${API_URL}/${id}`);
-    return id; 
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
+// ===========================
+// UPDATE DONE ONLY (FOR CHECKBOX)
+// ===========================
+export const updateTaskDone = createAsyncThunk(
+  "tasks/updateDone",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${API_URL}/done/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
   }
-});
+);
 
+// ===========================
+// DELETE TASK
+// ===========================
+export const deleteTask = createAsyncThunk(
+  "tasks/deleteTask",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
+// ===========================
+// INITIAL STATE
+// ===========================
 const initialState = {
   tasks: [],
   isLoading: false,
@@ -48,6 +89,9 @@ const initialState = {
   message: ""
 };
 
+// ===========================
+// SLICE
+// ===========================
 export const TaskSlice = createSlice({
   name: "tasks",
   initialState,
@@ -55,6 +99,7 @@ export const TaskSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
+      // ---------------- ADD TASK ----------------
       .addCase(addTask.pending, (state) => {
         state.isLoading = true;
       })
@@ -71,7 +116,7 @@ export const TaskSlice = createSlice({
         state.message = action.payload;
       })
 
-
+      // ---------------- GET TASKS ----------------
       .addCase(getTasks.pending, (state) => {
         state.isLoading = true;
       })
@@ -83,22 +128,27 @@ export const TaskSlice = createSlice({
           ? action.payload
           : action.payload.tasks;
       })
-      .addCase(getTasks.rejected, (state, action) => {
+      .addCase(getTasks.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       })
 
-
+      // ---------------- UPDATE TASK ----------------
       .addCase(updateTask.fulfilled, (state, action) => {
-        state.isSuccess = true;
-        const updatedTask = action.payload.task || action.payload;
-        const idx = state.tasks.findIndex((t) => t._id === updatedTask._id);
-        if (idx !== -1) state.tasks[idx] = updatedTask;
+        const updated = action.payload.task || action.payload;
+        const index = state.tasks.findIndex((t) => t._id === updated._id);
+        if (index !== -1) state.tasks[index] = updated;
       })
 
+      // ---------------- UPDATE DONE ----------------
+      .addCase(updateTaskDone.fulfilled, (state, action) => {
+        const updated = action.payload.task || action.payload;
+        const index = state.tasks.findIndex((t) => t._id === updated._id);
+        if (index !== -1) state.tasks[index] = updated;
+      })
 
+      // ---------------- DELETE TASK ----------------
       .addCase(deleteTask.fulfilled, (state, action) => {
-        state.isSuccess = true;
         state.tasks = state.tasks.filter((t) => t._id !== action.payload);
       });
   }
