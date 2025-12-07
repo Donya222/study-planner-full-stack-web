@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getTasks } from "../features/TaskSlice";
 import { updateTaskDone, deleteTask } from "../features/TaskSlice";
 
+
 const quotes = [
   "Believe you can and you're halfway there.",
   "Success is not final; failure is not fatal.",
@@ -314,8 +315,8 @@ const Home = () => {
           <img src="https://img.icons8.com/ios-glyphs/50/plus.png" width="32" />
         </Link>
 
-        <Link to="/tasks">
-          <img src="https://img.icons8.com/ios-glyphs/30/task.png" width="27" />
+        <Link to="/focus">
+          <img src="https://img.icons8.com/?size=100&id=70151&format=png&color=000000" width="27" />
         </Link>
 
         <Link to="/profile">

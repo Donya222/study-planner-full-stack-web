@@ -10,12 +10,15 @@ import Logo from "../assets/logo.png";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useState } from "react";
 
+
+
+
 const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   const handleLogout = () => {
-    navigate("/Login"); 
+    navigate("/login"); 
   };
 
   return (
