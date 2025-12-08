@@ -13,7 +13,6 @@ import Profile from './components/Profile.jsx';
 import FocusTimer from "./components/FocusTimer.jsx";
 
 
-
 function App() {
   const email = useSelector((state) => state.users.user?.email);
 
