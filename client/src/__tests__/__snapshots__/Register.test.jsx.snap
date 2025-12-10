@@ -1,0 +1,142 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Register Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="container-fluid"
+    >
+      <div
+        class="div-row row"
+      >
+        <div
+          class="div-col col-md-6"
+        >
+          <form
+            class="div-form"
+          >
+            <div>
+              <img
+                alt="Logo"
+                class="img-fluid rounded mx-auto d-block"
+                src="/src/assets/logo.png"
+                style="width: 150px;"
+              />
+            </div>
+            <div
+              style="background-color: rgb(43, 99, 217); width: 100%; padding: 12px; border-radius: 10px; text-align: center; margin-top: 10px; margin-bottom: 20px;"
+            >
+              <h4
+                style="color: white; margin: 0px; font-weight: 700;"
+              >
+                Sign Up
+              </h4>
+            </div>
+            <div
+              class="mb-3"
+            >
+              <label
+                class="form-label"
+              >
+                Name
+              </label>
+              <input
+                class="form-control"
+                name="uname"
+                placeholder="Enter your name"
+                type="text"
+              />
+              <p
+                style="color: red;"
+              />
+            </div>
+            <div
+              class="mb-3"
+            >
+              <label
+                class="form-label"
+              >
+                Email
+              </label>
+              <input
+                class="form-control"
+                name="email"
+                placeholder="Enter your email"
+                type="email"
+              />
+              <p
+                style="color: red;"
+              />
+            </div>
+            <div
+              class="mb-3"
+            >
+              <label
+                class="form-label"
+              >
+                Password
+              </label>
+              <input
+                class="form-control"
+                name="password"
+                placeholder="Enter your password"
+                type="password"
+              />
+              <p
+                style="color: red;"
+              />
+            </div>
+            <div
+              class="mb-3"
+            >
+              <label
+                class="form-label"
+              >
+                Location
+              </label>
+              <input
+                class="form-control"
+                name="location"
+                placeholder="Enter your location"
+                type="text"
+              />
+              <p
+                style="color: red;"
+              />
+            </div>
+            <div
+              class="mb-3"
+            >
+              <button
+                class="small-btn btn btn-primary"
+                type="button"
+              >
+                Sign Up
+              </button>
+            </div>
+            <div
+              class="mb-3"
+            >
+              <p />
+            </div>
+            <div
+              class="text-center mt-2"
+            >
+              <label
+                class="form-label"
+              >
+                Already have an account? 
+                <a
+                  href="/"
+                >
+                  Sign In
+                </a>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

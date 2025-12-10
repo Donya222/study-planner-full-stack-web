@@ -113,7 +113,7 @@ const Home = () => {
         <img src="https://img.icons8.com/color/96/books.png" alt="books" />
       </div>
 
-      {/* ---------------- GREETING + QUOTE ---------------- */}
+      {/*  GREETING + QUOTE */}
       <div className="p-4">
         <h2 style={{ fontWeight: "700" }}>Hey, {user?.uname || "User"}!</h2>
 
@@ -129,10 +129,10 @@ const Home = () => {
           <p style={{ margin: 0, fontSize: "18px" }}>"{quote}"</p>
         </div>
 
-        {/* ---------------- TWO COLUMNS ---------------- */}
+        {/* TWO COLUMNS  */}
         <div style={{ display: "flex", gap: "12px" }}>
 
-          {/* ---------------- TASKS COLUMN ---------------- */}
+          {/*  TASKS COLUMN  */}
           <div style={{ flex: 1 }}>
             <h5 style={{ fontWeight: "600", marginBottom: "10px" }}>Tasks</h5>
 
@@ -195,7 +195,7 @@ const Home = () => {
             )}
           </div>
 
-          {/* ---------------- EXAMS COLUMN ---------------- */}
+          {/*  EXAMS COLUMN  */}
           <div style={{ flex: 1 }}>
             <h5 style={{ fontWeight: "600", marginBottom: "10px" }}>Exams</h5>
 
@@ -256,7 +256,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ---------------- COMPLETED SECTION ---------------- */}
+        {/*COMPLETED SECTION */}
         <h5 style={{ fontWeight: "600", marginTop: "30px" }}>Completed</h5>
 
         {doneItems.length > 0 ? (
@@ -289,7 +289,7 @@ const Home = () => {
 
       </div>
 
-      {/* ---------------- BOTTOM NAV ---------------- */}
+      {/* BOTTOM NAV  */}
       <div
         style={{
           position: "fixed",

@@ -1,0 +1,99 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Login Component > Match the Login UI snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container-fluid"
+  >
+    <div
+      class="div-row row"
+    >
+      <div
+        class="div-col col-md-6"
+      >
+        <form
+          class="div-form"
+        >
+          <img
+            alt="Logo"
+            class="img-fluid rounded mx-auto d-block"
+            src="/src/assets/logo.png"
+            style="width: 150px;"
+          />
+          <div
+            style="background-color: rgb(43, 99, 217); width: 100%; padding: 12px; border-radius: 10px; text-align: center; margin-top: 10px; margin-bottom: 25px;"
+          >
+            <h4
+              style="color: white; margin: 0px; font-weight: 700;"
+            >
+              Sign In
+            </h4>
+          </div>
+          <div
+            class="mb-3"
+          >
+            <label
+              class="form-label"
+            >
+              Email
+            </label>
+            <input
+              class="form-control"
+              name="email"
+              placeholder="Enter your email"
+              type="email"
+            />
+            <p
+              class="text-danger"
+            />
+          </div>
+          <div
+            class="mb-3"
+          >
+            <label
+              class="form-label"
+            >
+              Password
+            </label>
+            <input
+              class="form-control"
+              name="password"
+              placeholder="Enter your password"
+              type="password"
+            />
+            <a
+              class="small text-decoration-none"
+              href="/forget-password"
+            >
+              Forgot Password?
+            </a>
+            <p
+              class="text-danger"
+            />
+          </div>
+          <button
+            class="small-btn btn btn-primary"
+            type="submit"
+          >
+            Sign In
+          </button>
+          <div
+            class="text-center mt-2"
+          >
+            <label
+              class="form-label"
+            >
+              Don't have an Account? 
+              <a
+                href="/register"
+              >
+                Sign Up
+              </a>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

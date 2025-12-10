@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.9.2",
@@ -20,8 +21,10 @@
     "yup": "^1.7.1"
   },
   "scripts": {
+    "dev":"vite",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "preview":"vite preview",
     "eject": "react-scripts eject",
     "test": "vitest run"
   },
@@ -50,12 +53,16 @@
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "babel-jest": "^30.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest-transform-stub": "^2.0.0",
-    "redux-mock-store": "^1.5.5"
+    "jsdom": "^22.1.0",
+    "redux-mock-store": "^1.5.5",
+    "vitest": "^4.0.15"
   }
 }
-
