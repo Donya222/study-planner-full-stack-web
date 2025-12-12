@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getUser = createAsyncThunk("users/getUser", async (udata) => {
   try {
-    const response = await axios.post("http://localhost:5000/login", udata);
+    const response = await axios.post("https://study-planner-full-stack-web.onrender.com/login", udata);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ export const getUser = createAsyncThunk("users/getUser", async (udata) => {
 
 export const addUser = createAsyncThunk("users/addUser", async (udata) => {
   try {
-    const response = await axios.post("http://localhost:5000/register", udata);
+    const response = await axios.post("https://study-planner-full-stack-web.onrender.com/register", udata);
     return response.data.message;
   } catch (error) {
     console.log(error);
@@ -25,7 +25,7 @@ export const updateProfile = createAsyncThunk(
   async ({ id, data }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/profile/${id}`,
+        `https://study-planner-full-stack-web.onrender.com/profile/${id}`,
         data
       );
       return response.data.user; // ← updated user

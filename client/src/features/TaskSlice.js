@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/tasks";
+const API_URL = "https://study-planner-full-stack-web.onrender.com/tasks";
 
 // ===========================
 // ADD TASK
