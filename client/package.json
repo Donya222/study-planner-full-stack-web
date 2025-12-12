@@ -30,7 +30,9 @@
   },
 
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.1.2",
-    "vitest": "^4.0.15"
-  }
+  "@vitejs/plugin-react": "^5.1.2",
+  "vite": "^5.4.0",
+  "vitest": "^4.0.15"
+}
+
 }
