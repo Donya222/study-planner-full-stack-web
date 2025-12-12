@@ -16,7 +16,7 @@ const AddTask = () => {
     type: "Task",
     dueDate: "",
     dueTime: "",
-    priority: "Medium"   // ⭐ NEW
+    priority: "Medium"  
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const AddTask = () => {
     if (id) {
       const fetchTask = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/tasks/${id}`);
+          const res = await axios.get(`https://study-planner-full-stack-web.onrender.com/tasks/${id}`);
           const task = res.data;
 
           const dt = new Date(task.dueDateTime);
@@ -41,7 +41,7 @@ const AddTask = () => {
             type: task.type,
             dueDate: dateStr,
             dueTime: timeStr,
-            priority: task.priority || "Medium"  // ⭐ load existing priority
+            priority: task.priority || "Medium"  // load existing priority
           });
         } catch (err) {
           console.error("Error fetching task", err);
@@ -69,9 +69,9 @@ const AddTask = () => {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:5000/tasks/${id}`, payload);
+        await axios.put(`https://study-planner-full-stack-web.onrender.com/tasks/${id}`, payload);
       } else {
-        await axios.post("http://localhost:5000/tasks", payload);
+        await axios.post("https://study-planner-full-stack-web.onrender.com/tasks", payload);
       }
 
       navigate("/home");
@@ -84,7 +84,7 @@ const AddTask = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this?")) {
       try {
-        await axios.delete(`http://localhost:5000/tasks/${id}`);
+        await axios.delete(`https://study-planner-full-stack-web.onrender.com/tasks/${id}`);
         navigate("/home");
       } catch (err) {
         alert("Error deleting task");
@@ -130,7 +130,7 @@ const AddTask = () => {
               </Input>
             </FormGroup>
 
-            {/* ⭐ NEW RADIO BUTTONS */}
+            {/* NEW RADIO BUTTONS */}
             <FormGroup>
               <Label>Priority</Label>
               <div style={{ display: "flex", gap: "20px", marginTop: "8px" }}>
