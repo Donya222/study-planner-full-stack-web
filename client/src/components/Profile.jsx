@@ -153,7 +153,7 @@ const Profile = () => {
             style={inputStyle}
           />
 
-          {/* 📍 BUTTON: USE MY LOCATION */}
+          {/* BUTTON: USE MY LOCATION */}
           <button
             onClick={handleUseMyLocation}
             style={{
@@ -170,7 +170,7 @@ const Profile = () => {
             Use My Current Location
           </button>
 
-          {/* 🌍 GOOGLE MAPS VIEW */}
+          {/* GOOGLE MAPS VIEW */}
           {formData.lat && formData.lng && (
             <>
               <label>Your Location on Map</label>
