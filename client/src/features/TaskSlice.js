@@ -3,9 +3,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/tasks";
 
-// ===========================
-// ADD TASK
-// ===========================
+
 export const addTask = createAsyncThunk(
   "tasks/addTask",
   async (taskData, { rejectWithValue }) => {
@@ -18,9 +16,7 @@ export const addTask = createAsyncThunk(
   }
 );
 
-// ===========================
-// GET TASKS BY EMAIL
-// ===========================
+
 export const getTasks = createAsyncThunk(
   "tasks/getTasks",
   async (email, { rejectWithValue }) => {
@@ -33,9 +29,7 @@ export const getTasks = createAsyncThunk(
   }
 );
 
-// ===========================
-// UPDATE TASK FULL
-// ===========================
+
 export const updateTask = createAsyncThunk(
   "tasks/updateTask",
   async ({ id, taskData }, { rejectWithValue }) => {
@@ -48,9 +42,7 @@ export const updateTask = createAsyncThunk(
   }
 );
 
-// ===========================
-// UPDATE DONE ONLY (FOR CHECKBOX)
-// ===========================
+
 export const updateTaskDone = createAsyncThunk(
   "tasks/updateDone",
   async (id, { rejectWithValue }) => {
@@ -63,9 +55,7 @@ export const updateTaskDone = createAsyncThunk(
   }
 );
 
-// ===========================
-// DELETE TASK
-// ===========================
+
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async (id, { rejectWithValue }) => {
@@ -78,9 +68,7 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
-// ===========================
-// INITIAL STATE
-// ===========================
+
 const initialState = {
   tasks: [],
   isLoading: false,
@@ -89,9 +77,7 @@ const initialState = {
   message: ""
 };
 
-// ===========================
-// SLICE
-// ===========================
+
 export const TaskSlice = createSlice({
   name: "tasks",
   initialState,
