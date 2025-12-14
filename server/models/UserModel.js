@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema(
     // Country Name
     location: { type: String, default: "Oman" },
 
-    // ⭐ NEW — Coordinates for Google Maps
+  
     lat: { type: Number, default: null },
     lng: { type: Number, default: null }
   },

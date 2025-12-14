@@ -9,7 +9,7 @@ const TaskSchema = mongoose.Schema(
     dueDateTime: { type: Date, required: true },
     email: { type: String, required: true },
 
-    // ⭐ NEW FIELD — Priority (High / Medium / Low)
+    
     priority: { type: String, default: "Medium" },
 
     // CHECKBOX + COMPLETION DATE

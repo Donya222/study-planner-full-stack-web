@@ -141,7 +141,7 @@ app.delete("/profile/:id", async (req, res) => {
 });
 
 
-// ADD TASK  ⭐ WITH PRIORITY
+// ADD TASK 
 app.post("/tasks", async (req, res) => {
     try {
         const { title, details, subject, type, dueDateTime, email, priority } = req.body;
@@ -153,7 +153,7 @@ app.post("/tasks", async (req, res) => {
             type,
             dueDateTime,
             email,
-            priority: priority || "Medium", // ⭐ NEW
+            priority: priority || "Medium", 
             done: false,
             completedAt: null
         });
@@ -203,7 +203,7 @@ app.get("/tasks/:id", async (req, res) => {
 });
 
 
-// UPDATE TASK ⭐ PRIORITY INCLUDED AUTOMATICALLY
+// UPDATE TASK 
 app.put("/tasks/:id", async (req, res) => {
     try {
         const updatedTask = await TaskModel.findByIdAndUpdate(
